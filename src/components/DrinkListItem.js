@@ -28,8 +28,8 @@ function DrinkListItem({ drink }) {
 
   return (
     <Grid item xs={6} md={3}>
-      <Card className={classes.root}>
-        <CardActionArea>
+      <Card>
+        <CardActionArea className={classes.root}>
           <CardMedia className={classes.image} image={drink.strDrinkThumb} />
           <CardContent>
             <Typography gutterBottom variant='h5' component='h2'>
