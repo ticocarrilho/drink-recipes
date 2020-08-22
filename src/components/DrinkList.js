@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { Grid, CircularProgress } from '@material-ui/core';
+import { Grid, CircularProgress, Typography } from '@material-ui/core';
 import DrinkListItem from './DrinkListItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { drinksSelector, fetchDrinks } from '../slices/drinksSlice';
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 const LoadingMessage = ({ classIcon }) => {
   return (
     <>
-      <h1>Loading...</h1>
+      <Typography variant='h3' component='h5'>Loading...</Typography>
       <div className={classIcon}>
         <CircularProgress size='2rem' />
       </div>
@@ -25,7 +25,12 @@ const LoadingMessage = ({ classIcon }) => {
 };
 
 const renderDrinkList = (drinks) => {
-  return drinks.map((drink, i) => <DrinkListItem key={i} drink={drink} />);
+  if (drinks) {
+    return drinks.map((drink, i) => <DrinkListItem key={i} drink={drink} />);
+  }
+  else {
+    return <Typography variant='h3' component='h5'>No drinks found</Typography>
+  }
 };
 
 function DrinkList() {

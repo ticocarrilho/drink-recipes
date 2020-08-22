@@ -1,16 +1,25 @@
 import React from 'react';
-import { Toolbar, AppBar, IconButton, Typography, InputBase } from '@material-ui/core';
+import {
+  Toolbar,
+  AppBar,
+  IconButton,
+  Typography,
+  InputBase,
+} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import { fade, makeStyles } from '@material-ui/core/styles';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { getDrinkByName } from '../slices/drinksSlice';
 
 const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
     display: 'none',
     [theme.breakpoints.up('sm')]: {
-      display: 'block'
-    }
+      display: 'block',
+    },
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -27,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(1),
       width: 'auto',
-    }
+    },
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
@@ -39,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   inputRoot: {
-    color: 'inherit'
+    color: 'inherit',
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -52,11 +61,18 @@ const useStyles = makeStyles((theme) => ({
         width: '25ch',
       },
     },
-  }
+  },
 }));
 
 function Navbar() {
   const classes = useStyles();
+  const { register, handleSubmit } = useForm();
+  const dispatch = useDispatch();
+
+  const onSubmit = (data) => {
+    console.log(data)
+    dispatch(getDrinkByName(data.drinkname))
+  }
 
   return (
     <AppBar position='static'>
@@ -71,13 +87,17 @@ function Navbar() {
           <div className={classes.searchIcon}>
             <SearchIcon />
           </div>
-          <InputBase
-              placeholder="Search Drink…"
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <InputBase
+              name="drinkname"
+              placeholder='Search Drink…'
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
+              inputRef={register()}
             />
+          </form>
         </div>
       </Toolbar>
     </AppBar>
