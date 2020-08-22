@@ -59,7 +59,7 @@ function Navbar() {
   const classes = useStyles();
 
   return (
-    <AppBar>
+    <AppBar position='static'>
       <Toolbar>
         <IconButton className={classes.menuButton} edge='start' color='inherit'>
           <MenuIcon />
