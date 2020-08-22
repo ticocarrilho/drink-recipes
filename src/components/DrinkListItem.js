@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 250,
+    maxWidth: 290,
     height: 350,
     [theme.breakpoints.down('sm')]: {
       height: 365,
