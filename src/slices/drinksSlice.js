@@ -49,7 +49,7 @@ export function fetchDrinks(){
     return async (dispatch) => {
         dispatch(getAllDrinks());
         try {
-            const response = await api.get('/filter.php', { params: { a: 'Alcoholic' }});
+            const response = await api.get('/search.php', { params: { f: 'a' }});
             dispatch(getAllDrinksSuccess(response.data.drinks));
         } catch (error) {
             

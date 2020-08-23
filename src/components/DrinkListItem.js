@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Card,
   CardActionArea,
@@ -8,6 +8,7 @@ import {
   Grid,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import DrinkDialog from './DrinkDialog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,12 +29,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function DrinkListItem({ drink }) {
+  const [openDialog, setOpenDialog] = useState(false);
   const classes = useStyles();
+
+  const toggleDialog = () => setOpenDialog(!openDialog);
 
   return (
     <Grid item xs={6} md={3}>
+      <DrinkDialog drink={drink} isOpen={openDialog} handleClose={toggleDialog}/>
       <Card>
-        <CardActionArea className={classes.root}>
+        <CardActionArea className={classes.root} onClick={toggleDialog}>
           <CardMedia className={classes.image} image={drink.strDrinkThumb} />
           <CardContent>
             <Typography gutterBottom variant='h5' component='h2'>
