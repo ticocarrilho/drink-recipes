@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 const renderIngredients = (drink) => {
   return Object.entries(drink).map((entry) => {
     if (entry[0].includes('strIngredient') && entry[1]) {
-      return <Typography>{entry[1]}</Typography>;
+      return <Typography key={entry[1]}>{entry[1]}</Typography>;
     }
   });
 };
