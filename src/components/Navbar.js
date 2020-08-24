@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Toolbar,
   AppBar,
@@ -11,7 +11,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { getDrinkByName } from '../slices/drinksSlice';
+import { getDrinkByName, getDrinkByIngredient } from '../slices/drinksSlice';
+import Drawer from './Drawer';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -64,20 +65,42 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Navbar() {
+function Navbar({ ingredient }) {
   const classes = useStyles();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
 
   const onSubmit = (data) => {
-    console.log(data)
-    dispatch(getDrinkByName(data.drinkname))
-  }
+    if (ingredient) {
+      dispatch(getDrinkByIngredient(data.ingredient));
+    } else {
+      dispatch(getDrinkByName(data.drinkname));
+    }
+  };
+
+  const handleCloseDrawer = () => {
+    setIsDrawerOpen(false);
+  };
+
+  const handleOpenDrawer = () => {
+    setIsDrawerOpen(true);
+  };
+
+  const optionsDrawer = [
+    ['Search Drinks', '/'],
+    ['Search Drinks by Ingredients', '/ingredients'],
+  ];
 
   return (
     <AppBar position='static'>
       <Toolbar>
-        <IconButton className={classes.menuButton} edge='start' color='inherit'>
+        <IconButton
+          onClick={handleOpenDrawer}
+          className={classes.menuButton}
+          edge='start'
+          color='inherit'
+        >
           <MenuIcon />
         </IconButton>
         <Typography className={classes.title} variant='h6' noWrap>
@@ -89,8 +112,10 @@ function Navbar() {
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
             <InputBase
-              name="drinkname"
-              placeholder='Search Drink…'
+              name={ingredient ? 'ingredient' : 'drinkname'}
+              placeholder={
+                ingredient ? 'Search Ingredient...' : 'Search Drink…'
+              }
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
@@ -100,6 +125,12 @@ function Navbar() {
           </form>
         </div>
       </Toolbar>
+      <Drawer
+        open={isDrawerOpen}
+        handleClose={handleCloseDrawer}
+        handleOpen={handleOpenDrawer}
+        options={optionsDrawer}
+      />
     </AppBar>
   );
 }
