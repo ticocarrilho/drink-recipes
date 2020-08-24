@@ -17,6 +17,12 @@ const useStyles = makeStyles((theme) => ({
     width: '10vw',
     borderRadius: '50%',
     marginRight: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      width: '15vw',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '20vw',
+    },
   },
 }));
 
