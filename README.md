@@ -3,7 +3,7 @@ In this website the user is able to search for a drink/ingredient and see what i
 This project uses [The Cocktail DB API](https://www.thecocktaildb.com/api.php)
 # Tools used
 
-React, Redux, Redux Toolkit, React Hooks Form, Material-UI, axios
+React, Redux Toolkit, React Router, React Hooks Form, Material-UI, axios
 
 # How to run
 
